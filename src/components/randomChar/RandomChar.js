@@ -135,14 +135,18 @@ class RandomChar extends Component {
 const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki } = char;
 
-  const descriptionNo = description
+  const descriptionHas = description
     ? description
     : "There is no description for this character";
 
-  // const descr =
-  //   descriptionNo.length > 210
-  //     ? (descriptionNo.style = { textOverflow: "ellipsis" })
-  //     : "";
+  const descriptionLength =
+    descriptionHas.length < 210
+      ? description
+      : descriptionHas.slice(0, 210) + "...";
+
+  const commonDescription = descriptionLength
+    ? descriptionLength
+    : "There is no description for this character";
 
   return (
     <div className="randomchar__block">
@@ -150,7 +154,7 @@ const View = ({ char }) => {
       <div className="randomchar__info">
         <p className="randomchar__name">{name}</p>
 
-        <p className="randomchar__descr">{descriptionNo}</p>
+        <p className="randomchar__descr">{commonDescription}</p>
         <div className="randomchar__btns">
           <a href={homepage} className="button button__main">
             <div className="inner">Wiki</div>
