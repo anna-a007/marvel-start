@@ -30,6 +30,7 @@ class MarvelService {
     return this._transformCharter(res.data.results[0]);
   };
 
+  // вынесли из RandomChar 
   // _transformCharter = (res) => {
   //   return {
   //     name: res.data.results[0].name,

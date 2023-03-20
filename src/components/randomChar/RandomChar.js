@@ -135,14 +135,9 @@ class RandomChar extends Component {
 const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki } = char;
 
-  const descriptionHas = description
-    ? description
-    : "There is no description for this character";
-
+  //проверка на количество символов в тексте 
   const descriptionLength =
-    descriptionHas.length < 210
-      ? description
-      : descriptionHas.slice(0, 210) + "...";
+    description.length < 210 ? description : description.slice(0, 210) + "...";
 
   const commonDescription = descriptionLength
     ? descriptionLength
