@@ -57,6 +57,7 @@ class RandomChar extends Component {
     this.setState({
       char,
       loading: false,
+      
     });
   };
 
@@ -68,15 +69,15 @@ class RandomChar extends Component {
   };
 
   updateChar = () => {
+    this.setState({ loading: true, error: false });
     // const id = 1017100;
+    // const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
     const id = Math.floor(Math.random() * (1009478 - 1011196) + 1011196);
     this.marvelService
       .getCharacter(id) // выводит промис
       .then(this.onCharLoaded)
       .catch(this.onError);
   };
-
-
 
   render() {
     // const { name, description, thumbnail, homepage, wiki } = this.state;
@@ -90,19 +91,9 @@ class RandomChar extends Component {
       error,
     } = this.state;
 
-    // //условный рендеринг
-    // if (loading) {
-    //   return <Spinner />;
-    // }
-
-
-   
-
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
     const contetnt = !(loading || error) ? <View char={char} /> : null;
-    
-    
 
     return (
       <div className="randomchar">
@@ -130,14 +121,17 @@ class RandomChar extends Component {
           </div>
         </div> */}
         <div className="randomchar__static">
-        
           <p className="randomchar__title">
             Random character for today!
             <br />
             Do you want to get to know him better?
           </p>
           <p className="randomchar__title">Or choose another one</p>
-          <button  onClick={this.updateChar} className="button button__main">
+
+          <button
+            onClick={this.updateChar}
+            className="button button__main"
+          >
             <div className="inner">try it</div>
           </button>
           <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
