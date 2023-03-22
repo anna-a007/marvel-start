@@ -67,6 +67,7 @@ class RandomChar extends Component {
       .getCharacter(id)
       .then(this.onCharLoaded)
       .catch(this.onError);
+      
   };
 
   render() {
@@ -122,7 +123,7 @@ class RandomChar extends Component {
             Do you want to get to know him better?
           </p>
           <p className="randomchar__title">Or choose another one</p>
-          <button className="button button__main">
+          <button onClick={this.updateChar} className="button button__main">
             <div className="inner">try it</div>
           </button>
           <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
