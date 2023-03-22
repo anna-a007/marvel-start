@@ -26,11 +26,12 @@ class MarvelService {
     const res = await this.getResource(
       `${this._apiBase}characters/${id}?${this._apiKey}` // в res придет ответ от сервера
     );
+
     // return this._transformCharter(res);
     return this._transformCharter(res.data.results[0]);
   };
 
-  // вынесли из RandomChar 
+  // вынесли из RandomChar
   // _transformCharter = (res) => {
   //   return {
   //     name: res.data.results[0].name,

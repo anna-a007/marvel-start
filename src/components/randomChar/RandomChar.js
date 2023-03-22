@@ -7,10 +7,9 @@ import "./randomChar.scss";
 import mjolnir from "../../resources/img/mjolnir.png";
 
 class RandomChar extends Component {
-  constructor(props) {
-    super(props);
-    this.updateChar();
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   // state = {
   //   name: null,
@@ -29,6 +28,31 @@ class RandomChar extends Component {
   //создаем новый метод на основе класса MarvelService, теперь доступны методы из этого класса здесь
   marvelService = new MarvelService();
 
+  componentDidMount() {
+    this.updateChar();
+    // this.timID = setInterval(this.updateChar, 2000)
+  }
+
+  componentWillUnmount() {
+    // clearInterval(this.timID)
+  }
+
+  // this.marvelService //достаем метод getCharacter(id) из MarvelService
+  //   .getCharacter(id) // выводит промис
+  //   .then((res) => {
+  //     // this.setState({
+  //     //   name: res.data.results[0].name,
+  //     //   description: res.data.results[0].description,
+  //     //   thumbnail:
+  //     //     res.data.results[0].thumbnail.path +
+  //     //     "." +
+  //     //     res.data.results[0].thumbnail.extension,
+  //     //   homepage: res.data.results[0].urls[0].url,
+  //     //   wiki: res.data.results[0].urls[1].url,
+  //     // });
+  //     this.setState(res);
+  //   });
+
   onCharLoaded = (char) => {
     this.setState({
       char,
@@ -46,28 +70,13 @@ class RandomChar extends Component {
   updateChar = () => {
     // const id = 1017100;
     const id = Math.floor(Math.random() * (1009478 - 1011196) + 1011196);
-
-    // this.marvelService //достаем метод getCharacter(id) из MarvelService
-    //   .getCharacter(id) // выводит промис
-    //   .then((res) => {
-    //     // this.setState({
-    //     //   name: res.data.results[0].name,
-    //     //   description: res.data.results[0].description,
-    //     //   thumbnail:
-    //     //     res.data.results[0].thumbnail.path +
-    //     //     "." +
-    //     //     res.data.results[0].thumbnail.extension,
-    //     //   homepage: res.data.results[0].urls[0].url,
-    //     //   wiki: res.data.results[0].urls[1].url,
-    //     // });
-    //     this.setState(res);
-    //   });
-
     this.marvelService
-      .getCharacter(id)
+      .getCharacter(id) // выводит промис
       .then(this.onCharLoaded)
       .catch(this.onError);
   };
+
+
 
   render() {
     // const { name, description, thumbnail, homepage, wiki } = this.state;
@@ -86,9 +95,14 @@ class RandomChar extends Component {
     //   return <Spinner />;
     // }
 
+
+   
+
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
     const contetnt = !(loading || error) ? <View char={char} /> : null;
+    
+    
 
     return (
       <div className="randomchar">
@@ -116,13 +130,14 @@ class RandomChar extends Component {
           </div>
         </div> */}
         <div className="randomchar__static">
+        
           <p className="randomchar__title">
             Random character for today!
             <br />
             Do you want to get to know him better?
           </p>
           <p className="randomchar__title">Or choose another one</p>
-          <button className="button button__main">
+          <button  onClick={this.updateChar} className="button button__main">
             <div className="inner">try it</div>
           </button>
           <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
@@ -135,7 +150,7 @@ class RandomChar extends Component {
 const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki } = char;
 
-  //проверка на количество символов в тексте 
+  //проверка на количество символов в тексте
   const descriptionLength =
     description.length < 210 ? description : description.slice(0, 210) + "...";
 
