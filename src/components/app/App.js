@@ -24,14 +24,12 @@ import { Component } from "react";
 
 class App extends Component {
   state = {
-    showRandomChar: true,
+    selectedChar: null,
   };
 
-  toggleRandomChar = () => {
-    this.setState((state) => {
-      return {
-        showRandomChar: !state.showRandomChar,
-      };
+  onCharSelected = (id) => {
+    this.setState({
+      selectedChar: id,
     });
   };
 
@@ -40,12 +38,10 @@ class App extends Component {
       <div className="app">
         <AppHeader />
         <main>
-          {this.state.showRandomChar ? <RandomChar /> : null}
-          {/* <button onClick={this.toggleRandomChar}>Click me</button> */}
-
+          <RandomChar />
           <div className="char__content">
-            <CharList />
-            <CharInfo />
+            <CharList onCharSelected={this.onCharSelected} />
+            <CharInfo charId={this.state.selectedChar} />
           </div>
           <img className="bg-decoration" src={decoration} alt="vision" />
         </main>
