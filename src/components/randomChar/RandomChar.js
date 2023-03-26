@@ -23,14 +23,16 @@ class RandomChar extends Component {
     char: {},
     loading: true,
     error: false,
+    
   };
+
+
 
   //создаем новый метод на основе класса MarvelService, теперь доступны методы из этого класса здесь
   marvelService = new MarvelService();
 
   componentDidMount() {
     this.updateChar();
-    // this.timID = setInterval(this.updateChar, 2000)
   }
 
   componentWillUnmount() {
@@ -57,7 +59,6 @@ class RandomChar extends Component {
     this.setState({
       char,
       loading: false,
-      
     });
   };
 
@@ -70,8 +71,6 @@ class RandomChar extends Component {
 
   updateChar = () => {
     this.setState({ loading: true, error: false });
-    // const id = 1017100;
-    // const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
     const id = Math.floor(Math.random() * (1009478 - 1011196) + 1011196);
     this.marvelService
       .getCharacter(id) // выводит промис
@@ -101,25 +100,6 @@ class RandomChar extends Component {
         {errorMessage}
         {spinner}
         {contetnt}
-        {/* <div className="randomchar__block">
-          <img
-            src={thumbnail}
-            alt="Random character"
-            className="randomchar__img"
-          />
-          <div className="randomchar__info">
-            <p className="randomchar__name">{name}</p>
-            <p className="randomchar__descr">{description}</p>
-            <div className="randomchar__btns">
-              <a href={homepage} className="button button__main">
-                <div className="inner">Wiki</div>
-              </a>
-              <a href={wiki} className="button button__secondary">
-                <div className="inner">Wiki</div>
-              </a>
-            </div>
-          </div>
-        </div> */}
         <div className="randomchar__static">
           <p className="randomchar__title">
             Random character for today!
@@ -128,10 +108,7 @@ class RandomChar extends Component {
           </p>
           <p className="randomchar__title">Or choose another one</p>
 
-          <button
-            onClick={this.updateChar}
-            className="button button__main"
-          >
+          <button onClick={this.updateChar} className="button button__main">
             <div className="inner">try it</div>
           </button>
           <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
@@ -143,6 +120,13 @@ class RandomChar extends Component {
 
 const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki } = char;
+  let imgStyle = { objectFit: "cover" };
+  if (
+    thumbnail ===
+    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
+  ) {
+    imgStyle = { objectFit: "contain" };
+  }
 
   //проверка на количество символов в тексте
   const descriptionLength =
@@ -154,7 +138,12 @@ const View = ({ char }) => {
 
   return (
     <div className="randomchar__block">
-      <img src={thumbnail} alt="Random character" className="randomchar__img" />
+      <img
+        src={thumbnail}
+        alt="Random character"
+        className="randomchar__img"
+        style={imgStyle}
+      />
       <div className="randomchar__info">
         <p className="randomchar__name">{name}</p>
 
