@@ -6,10 +6,10 @@ import CharInfo from "../charInfo/CharInfo";
 import decoration from "../../resources/img/vision.png";
 import { Component } from "react";
 
-
 class App extends Component {
   state = {
     selectedChar: null,
+    showRandomChar: true,
   };
 
   onCharSelected = (id) => {
@@ -17,8 +17,6 @@ class App extends Component {
       selectedChar: id,
     });
   };
-
-
 
   render() {
     return (
@@ -28,7 +26,7 @@ class App extends Component {
           {this.state.showRandomChar ? <RandomChar /> : null}
           <div className="char__content">
             <CharList onCharSelected={this.onCharSelected} />
-            <CharInfo charID={this.state.selectedChar}/>
+            <CharInfo charID={this.state.selectedChar} />
           </div>
           <img className="bg-decoration" src={decoration} alt="vision" />
         </main>

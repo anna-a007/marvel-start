@@ -26,8 +26,6 @@ class RandomChar extends Component {
     
   };
 
-
-
   //создаем новый метод на основе класса MarvelService, теперь доступны методы из этого класса здесь
   marvelService = new MarvelService();
 
