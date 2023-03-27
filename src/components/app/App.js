@@ -9,7 +9,7 @@ import { Component } from "react";
 class App extends Component {
   state = {
     selectedChar: null,
-    showRandomChar: true,
+    // showRandomChar: true,
   };
 
   onCharSelected = (id) => {
@@ -23,7 +23,7 @@ class App extends Component {
       <div className="app">
         <AppHeader />
         <main>
-          {this.state.showRandomChar ? <RandomChar /> : null}
+          <RandomChar />
           <div className="char__content">
             <CharList onCharSelected={this.onCharSelected} />
             <CharInfo charID={this.state.selectedChar} />

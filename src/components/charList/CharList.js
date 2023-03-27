@@ -20,16 +20,16 @@ class CharList extends Component {
   }
 
   getChars = () => {
-    this.setState({ loading: true, error: false });
-    this.marvelService
+    // this.setState({ loading: true, error: false });
+    this.marvelService //получаем данные
       .getAllCharacters() // выводит промис
       .then(this.onCharLoaded)
       .catch(this.onError);
   };
 
-  onCharLoaded = (charList) => {
+  onCharLoaded = (char) => {
     this.setState({
-      charList: charList,
+      charList: char,
       loading: false,
     });
   };
@@ -43,13 +43,21 @@ class CharList extends Component {
 
   renderItems(arr) {
     const items = arr.map((item) => {
+      let imgStyle = { objectFit: "cover" };
+      if (
+        item.thumbnail ===
+        "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
+      ) {
+        imgStyle = { objectFit: "unset" };
+      }
       return (
         <li
           className="char__item"
           key={item.id}
-          onClick={() => this.props.onCharSelected(item.id)} //вытаскивает id по клику
+          onClick={() => this.props.onCharSelected(item.id)}
+          //вытаскивает id по клику
         >
-          <img src={item.thumbnail} alt={item.name} />
+          <img src={item.thumbnail} alt={item.name} style={imgStyle} />
           <div className="char__name">{item.name}</div>
         </li>
       );

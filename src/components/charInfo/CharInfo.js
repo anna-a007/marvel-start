@@ -19,12 +19,6 @@ class CharInfo extends Component {
     this.updateChar();
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.charId !== prevProps.charId) {
-      this.updateChar();
-    }
-  }
-
   updateChar = () => {
     const { charID } = this.props;
     if (!charID) {
@@ -38,9 +32,17 @@ class CharInfo extends Component {
       .catch(this.onError);
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.charId !== prevProps.charId) {
+      this.updateChar();
+    }
+  }
+
+  //успешная загрузка
   onCharLoaded = (char) => {
     this.setState({
-      char,
+      // char,
+      char: this.props.charID,
       loading: false,
     });
   };
@@ -79,6 +81,7 @@ class CharInfo extends Component {
 
 const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki, comics } = char;
+  const noComics = "There is no comics with this character";
   let imgStyle = { objectFit: "cover" };
   if (
     thumbnail ===
@@ -106,14 +109,15 @@ const View = ({ char }) => {
       <div className={description}></div>
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
-        {comics.map((item, i) => {
-          // if (i > 9) return;
-          return (
-            <li key={i} className="char__comics-item">
-              {item.name}
+        {comics.items.length > 0 ? (
+          [...comics.items].splice(10, comics.items.length - 10).map((item) => (
+            <li className="char__comics-item" key={item.id}>
+              <a href={item.resourceURI}>{item.name}</a>
             </li>
-          );
-        })}
+          ))
+        ) : (
+          <div>{noComics}</div>
+        )}
       </ul>
     </>
   );
