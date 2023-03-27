@@ -33,7 +33,7 @@ class CharInfo extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.charId !== prevProps.charId) {
+    if (this.props.charID !== prevProps.charID) {
       this.updateChar();
     }
   }
@@ -41,8 +41,8 @@ class CharInfo extends Component {
   //успешная загрузка
   onCharLoaded = (char) => {
     this.setState({
-      // char,
-      char: this.props.charID,
+      char,
+      // char: this.props.charID,
       loading: false,
     });
   };
@@ -109,9 +109,9 @@ const View = ({ char }) => {
       <div className={description}></div>
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
-        {comics.items.length > 0 ? (
-          [...comics.items].splice(10, comics.items.length - 10).map((item) => (
-            <li className="char__comics-item" key={item.id}>
+        {comics.length > 0 ? (
+          [...comics].splice(10, comics.length - 10).map((item) => (
+            <li className="char__comics-item" key={item.name}>
               <a href={item.resourceURI}>{item.name}</a>
             </li>
           ))
